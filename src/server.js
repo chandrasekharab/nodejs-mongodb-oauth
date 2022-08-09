@@ -5,7 +5,7 @@ const Experiment = require('./models/experiment');
 const app = express();
 const port = 3010;
 
-const dbURI = "";
+const dbURI = '';
 
 mongoose.connect(dbURI, { useNewUrlParser: true, useUnifiedTopology: true})
   .then((result) => {
@@ -38,4 +38,28 @@ app.get('/record', (req, res) => {
     });
 });
 
+app.get('/getall', (req, res) => {
+
+  Experiment.find()
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+
+});
+
+app.get('/getbyid', (req, res) => {
+  const id = req.query.id;
+
+  Experiment.findById(id)
+    .then((result) => {
+      res.send(result);
+    })
+    .catch((err) => {
+      res.send(err);
+    });
+
+});
 
